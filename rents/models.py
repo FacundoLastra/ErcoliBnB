@@ -42,7 +42,7 @@ class Reservation(models.Model):
         return self.firstName + ' ' + self.lastName
 
 
-class reservationDate(models.Model):
+class ReservationDate(models.Model):
     date = models.DateField()
     prop = models.ForeignKey(Prop, null=True, blank=True, on_delete=models.CASCADE)
     reservation = models.ForeignKey(Reservation, on_delete=models.PROTECT, blank=True, null=True)

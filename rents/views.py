@@ -31,7 +31,7 @@ def detail(request, propid):
     return render(request, 'rents/propInfo.html', {'propInfo': propInfo})
 
 
-def reserve(request):
+def reserveProp(request):
     if request.method == 'POST':
         beginDate = datetime.strptime(request.POST['dateFrom'], '%Y-%m-%d').date()
         endDate = datetime.strptime(request.POST['dateTo'], '%Y-%m-%d').date()

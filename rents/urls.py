@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from alquileres.views import *
+from rents.views import *
 from . import views
 
 urlpatterns = [
