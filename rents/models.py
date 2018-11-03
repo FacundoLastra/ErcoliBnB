@@ -16,12 +16,14 @@ class City(models.Model):
 
 
 class Prop(models.Model):
-    description = models.CharField(max_length=500)
+    name = models.CharField(blank=False, null=False, max_length=50, default="Property Name")
+    description = models.CharField(max_length=500, default="No description available")
     dailyPrice = models.IntegerField()
     image = models.ImageField(upload_to='image', max_length=100)
     title = models.CharField(max_length=50)
     maxGuests = models.IntegerField()
     city = models.ForeignKey(City, null=True, blank=True, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.DO_NOTHING)
 
     class Meta:
         verbose_name_plural = "Properties"
@@ -43,8 +45,8 @@ class Reservation(models.Model):
 
 
 class ReservationDate(models.Model):
-    date = models.DateField()
-    prop = models.ForeignKey(Prop, null=True, blank=True, on_delete=models.CASCADE)
+    date = models.DateField(blank=False, null=False)
+    prop = models.ForeignKey(Prop, on_delete=models.PROTECT, blank=False, null=False)
     reservation = models.ForeignKey(Reservation, on_delete=models.PROTECT, blank=True, null=True)
 
     class Meta:
