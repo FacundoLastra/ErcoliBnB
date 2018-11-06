@@ -1,10 +1,43 @@
 {% extends 'rents/base.html' %}
+{% load static %}
 {% block title %} Alquileres
 {% endblock %}
 {% block content %}
-
+<div class="row">
+    <div class="col s12">
+        <div class="carousel carousel-slider">
+            <div class="carousel-item" href="#one!">
+                <img class="imageFix" src="{% static 'images/Reservar-casa.jpg' %}">
+                <div class="carousel-fixed-item">
+                    <h1>Su Mejor Opcion Para Reservar</h1>
+                    <p class="white-text">Confianza y Seguridad Garantizada</p>
+                </div>
+            </div>
+            <div class="carousel-item " href="#two!">
+                <img class="imageFix" src="{% static 'images/barato.jpg' %}">
+                <div class="carousel-fixed-item">
+                    <h2>Seguro y barato</h2>
+                    <p class="white-text">Nos consideramos los mas baratos del mercado</p>
+              </div>
+            </div>
+            <div class="carousel-item green white-text" href="#three!">
+              <h2>Suporte Tecnico</h2>
+              <p class="white-text">Nuestros operadores siempre estan esperando sus consultas</p>
+            </div>
+            <div class="carousel-item blue white-text" href="#four!">
+              <h2>Facilidad</h2>
+              <p class="white-text">La manera mas simple de reservar tu proxima vivienda</p>
+            </div>
+          </div>
+    </div>
+</div>
 <div class="row">
     <div class="col s6">
+        <h4 class="truncate">Nuestras Publicaciones:</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col s6 offset-s3">
         <form method="GET" id="filterForm">
             <select name="cityId" id="cityId">
                 {% for city in cities %}
@@ -20,7 +53,7 @@
             {% if props %}
                 {% for prop in props %}
                 <div class="col s3">
-                    <div class="card">
+                    <div class="card hoverable">
                         <div class="card-image">
                             <img src="{{prop.image.url}}">
                             <span class="card-title">{{prop.title}}</span>
@@ -43,6 +76,19 @@
         $(document).ready(function() {
             $('select').formSelect();
         });
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.carousel');
+            var instances = M.Carousel.init(elems, {duration: 200, dist: 0});
+            var instance = M.Carousel.getInstance(elems[0]);
+        });
+        
+        setInterval(function() {
+            const elems = document.querySelectorAll('.carousel');
+            var instance = M.Carousel.getInstance(elems[0]);
+            instance.next()
+        }, 7000);
+        
+        
  </script>
         
 {% endblock %}

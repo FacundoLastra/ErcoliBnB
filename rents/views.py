@@ -25,7 +25,7 @@ def index(request):
 
 def detail(request, propid):
     try:
-        propInfo = Propiedad.objects.get(id=propiedadid)
+        propInfo = Prop.objects.get(id=propid)
     except Prop.DoesNotExist:
         raise Http404("No existe la propiedad")
     return render(request, 'rents/propInfo.html', {'propInfo': propInfo})
