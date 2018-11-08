@@ -3,12 +3,12 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from rents.models import *
 
-
 # Create your views here.
 def index(request):
     cities = City.objects.all()
-    if 'filter' in request.GET:
-        filtered = Prop.objects.all().filter(city=request.GET['idCity'])
+    print(request)
+    if 'cityId' in request.GET:
+        filtered = Prop.objects.all().filter(city = request.GET['cityId'])
         context = {
             'props': filtered,
             'cities': cities
@@ -32,6 +32,7 @@ def detail(request, propid):
 
 
 def reserveProp(request):
+    print("hola reserva")
     if request.method == 'POST':
         beginDate = datetime.strptime(request.POST['dateFrom'], '%Y-%m-%d').date()
         endDate = datetime.strptime(request.POST['dateTo'], '%Y-%m-%d').date()
