@@ -8,10 +8,12 @@
         <h4 class="truncate">Nuestras Publicaciones:</h4>
     </div>
 </div>
+{% if selectedCity %}
 <div class="row">
     <div class="col s6 offset-s3">
         <form method="GET" id="filterForm">
             <select name="cityId" id="cityId">
+                <option value="{{ selectedCity.id }}">{{ selectedCity.name }}</option>
                 {% for city in cities %}
                 <option value="{{ city.id }}">{{ city.name }}</option>
                 {% endfor %}  
@@ -20,6 +22,20 @@
         </form>
     </div>
 </div>
+{% else %}
+<div class="row">
+        <div class="col s6 offset-s3">
+            <form method="GET" id="filterForm">
+                <select name="cityId" id="cityId">
+                    {% for city in cities %}
+                    <option value="{{ city.id }}">{{ city.name }}</option>
+                    {% endfor %}  
+                </select>               
+                <button type="submit" class="btn btn-default">Filtrar</button>
+            </form>
+        </div>
+    </div>
+{% endif %}
 <div class="reservationsArea">
         <div class="row">
             {% if props %}
@@ -28,13 +44,13 @@
                     <div class="card hoverable">
                         <div class="card-image">
                             <img src="{{prop.image.url}}">
-                            <span class="card-title">{{prop.title}}</span>
                         </div>
                         <div class="card-content">
+                            <span class="card-title">{{prop.title}}</span>
                             <p>{{prop.description}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="{% url 'rents:prop' prop.id %}">This is a link</a>
+                            <a href="{% url 'rents:prop' prop.id %}">Reservar</a>
                         </div>
                     </div>
                 </div>

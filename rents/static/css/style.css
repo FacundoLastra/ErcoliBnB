@@ -4,7 +4,7 @@
 .imageFix {
     height: 30rem;
 }
-a.brand-logo.margin {
+a.brand-logo.marginNav {
     margin-left: 30rem;
 }
 .navColor{
@@ -15,4 +15,12 @@ a.brand-logo.margin {
 }
 .card .card-image .card-title {
     font-weight: bold !important;
+}
+span.card-title {
+    color: #000 !important;
+    font-weight: bold !important;
+}
+.margin {
+    margin-left: 5rem;
+    margin-top: 5rem;
 }

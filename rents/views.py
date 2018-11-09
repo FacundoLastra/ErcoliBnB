@@ -8,9 +8,12 @@ def index(request):
     cities = City.objects.all()
     if 'cityId' in request.GET:
         filtered = Prop.objects.all().filter(city = request.GET['cityId'])
+        city = City.objects.get(id = request.GET['cityId'])
+        cities = City.objects.exclude(id = request.GET['cityId'] )
         context = {
             'props': filtered,
-            'cities': cities
+            'cities': cities,
+            'selectedCity':city
         }
         return render(request, 'rents/index.html', context)
     else:
