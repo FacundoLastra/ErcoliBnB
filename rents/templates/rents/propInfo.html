@@ -32,33 +32,35 @@
 </div>
 <div class="row">
     <form class="col s12" action="/rents/reserveProp/" method="POST">
+        {% csrf_token %}
         <h2>Realizar una Reserva: </h2>
         <div class="row">
             <div class="input-field col s6">
-                <input id="firstName" type="text" class="validate">
+                <input id="firstName" name="firstName" type="text" class="validate">
                 <label for="firstName">Nombre</label>
             </div>
             <div class="input-field col s6">
-                <input id="lastName" type="text" class="validate">
+                <input id="lastName" name="lastName" type="text" class="validate">
                 <label for="lastName">Apellido</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input id="email" type="email" class="validate">
+                <input id="email" name="email" type="email" class="validate">
                 <label for="email">Email</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <input id="dateFrom" type="text" class="datepicker">
+                <input id="dateFrom" name="dateFrom" type="text" class="datepicker">
                 <label for="dateFrom">Desde:</label>
             </div>
             <div class="input-field col s6">
-                    <input id="dateTo" type="text" class="datepicker">
+                    <input id="dateTo" name="dateTo" type="text" class="datepicker">
                     <label for="dateTo">Hasta:</label>
             </div>
         </div>
+        <input type="number" name="propId" id="propId" value="{{propInfo.id}}" hidden>
         <div class="row">
             <div class="input-field col s6">
                 <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
@@ -71,7 +73,7 @@
 {% endif %}
 <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const options = {}
+            const options = { format: 'yyyy-mm-dd'}
             var elems = document.querySelectorAll('.datepicker');
             var instances = M.Datepicker.init(elems, options);
             console.log(instances)

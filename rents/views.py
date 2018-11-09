@@ -6,7 +6,6 @@ from rents.models import *
 # Create your views here.
 def index(request):
     cities = City.objects.all()
-    print(request)
     if 'cityId' in request.GET:
         filtered = Prop.objects.all().filter(city = request.GET['cityId'])
         context = {
@@ -32,35 +31,30 @@ def detail(request, propid):
 
 
 def reserveProp(request):
-    print("hola reserva")
     if request.method == 'POST':
         beginDate = datetime.strptime(request.POST['dateFrom'], '%Y-%m-%d').date()
         endDate = datetime.strptime(request.POST['dateTo'], '%Y-%m-%d').date()
         prop = Prop.objects.get(id=request.POST['propId'])
-        reservationDates = Reserva.objects.filter(propiedad=prop.id)
+        reservationDates = Reservation.objects.filter(prop=prop.id)
         for reservationDate in reservationDates:
             if reservationDate.reservationDate is not None:
                 if beginDate <= reservationDate.reservationDate <= endDate:
                     return render(request, 'rents/notAvailable.html')
         r = Reservation(
-            resevationDate=datetime.now().date(),
+            reservationDate=datetime.now().date(),
             prop=prop,
             firstName=request.POST['firstName'],
             lastName=request.POST['lastName'],
             email=request.POST['email'])
         r.save()
-        for reservationDate in reservationDates:
-            if beginDate <= reservationDate.reservationDate <= endDate:
-                reservationDate.reservationDate = r
-                reservationDate.save()
-        r.total = 100#harcode value => r.propiedad.precioDiario * r.propiedad.fechaAlquiler_set.filter(reserva=r).count()
+        r.total = r.prop.dailyPrice * r.prop.reservationdate_set.filter(reservation=r).count()
         r.save()
         return redirect('rents:okReservation', r.id)
 
 
 def okReservation(request, idReservation):
     try:
-        reservation = Reserva.objects.get(id=idReserva)
+        reservation = Reservation.objects.get(id=idReservation)
     except Prop.DoesNotExist:
         raise Http404("Propiedad no encontrada")
     return render(request, 'rents/okReservation.html', {'prop': reservation})
