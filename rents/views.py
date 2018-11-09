@@ -36,16 +36,17 @@ def reserveProp(request):
         endDate = datetime.strptime(request.POST['dateTo'], '%Y-%m-%d').date()
         prop = Prop.objects.get(id=request.POST['propId'])
         reservationDates = Reservation.objects.filter(prop=prop.id)
-        for reservationDate in reservationDates:
-            if reservationDate.reservationDate is not None:
-                if beginDate <= reservationDate.reservationDate <= endDate:
-                    return render(request, 'rents/notAvailable.html')
+        rd = ReservationDate(
+            date=datetime.now().date(),
+            prop=prop)
         r = Reservation(
-            reservationDate=datetime.now().date(),
+            reservationDate=rd,
             prop=prop,
             firstName=request.POST['firstName'],
             lastName=request.POST['lastName'],
             email=request.POST['email'])
+        rd.reservation=r
+        rd.save()
         r.save()
         r.total = r.prop.dailyPrice * r.prop.reservationdate_set.filter(reservation=r).count()
         r.save()
