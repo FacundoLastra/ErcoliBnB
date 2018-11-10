@@ -8,7 +8,9 @@ def index(request):
     cities = City.objects.all()
     if 'cityId' in request.GET:
         filtered = Prop.objects.all().filter(city = request.GET['cityId'])
-        city = City.objects.get(id = request.GET['cityId'])
+        city = City.objects.all().filter(id = request.GET['cityId'])
+        if city:
+            city = city[0]
         cities = City.objects.exclude(id = request.GET['cityId'] )
         context = {
             'props': filtered,
@@ -38,9 +40,17 @@ def reserveProp(request):
         beginDate = datetime.strptime(request.POST['dateFrom'], '%Y-%m-%d').date()
         endDate = datetime.strptime(request.POST['dateTo'], '%Y-%m-%d').date()
         prop = Prop.objects.get(id=request.POST['propId'])
-        reservationDates = Reservation.objects.filter(prop=prop.id)
+        reservationDates = ReservationDate.objects.filter(prop=prop.id)
+        for reservationDate in reservationDates:
+            if reservationDate  is not None:
+                if reservationDate.checkIn <= beginDate <= endDate:
+                    return render(request, 'rents/notAvailable.html')
+                if reservationDate.checkIn <= endDate <= reservationDate.checkOut:
+                    return render(request, 'rents/notAvailable.html')
         rd = ReservationDate(
             date=datetime.now().date(),
+            checkIn=beginDate,
+            checkOut=endDate,
             prop=prop)
         r = Reservation(
             reservationDate=rd,
@@ -50,7 +60,6 @@ def reserveProp(request):
             email=request.POST['email'])
         rd.reservation=r
         rd.save()
-        r.save()
         r.total = r.prop.dailyPrice * r.prop.reservationdate_set.filter(reservation=r).count()
         r.save()
         return redirect('rents:okReservation', r.id)

@@ -35,6 +35,8 @@ class Prop(models.Model):
 class ReservationDate(models.Model):
     date = models.DateField(blank=False, null=False)
     prop = models.ForeignKey(Prop, on_delete=models.PROTECT, blank=False, null=False)
+    checkIn = models.DateField(blank=True, null=True)
+    checkOut = models.DateField(blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "reservationDates"
