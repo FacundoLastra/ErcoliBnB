@@ -4,15 +4,14 @@ from .models import Prop, ReservationDate, City
 
 admin.site.site_header = "Ercolibnb: admin page"
 
-class ReservationDateInline(admin.TabularInline):
-    model = ReservationDate
-    exclude = ['reservation']
-    fk_name = 'prop'
-    max_num = 7
+class ReservationDateInLine(admin.TabularInline):
+    model=ReservationDate
+    fk_name ='prop'
+    min_num = 7
 
-
-class AdminProp(admin.ModelAdmin):
-    inlines = [ReservationDateInline, ]
+class AdminPropertyInLine(admin.ModelAdmin):
+    inlines=[ReservationDateInLine]
+    exclude = ['owner']
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'owner', None) is None:
@@ -20,13 +19,12 @@ class AdminProp(admin.ModelAdmin):
         obj.save()
 
     def get_queryset(self, request):
-        qs = super(AdminProp, self).get_queryset(request)
+        qs = super(AdminPropertyInLine, self).get_queryset(request)
         if request.user.is_superuser:
             return qs
         return qs.filter(owner=request.user)
 
-
 admin.site.register(City)
-admin.site.register(Prop, AdminProp)
+admin.site.register(Prop, AdminPropertyInLine)
 
 admin.site.unregister(Group)

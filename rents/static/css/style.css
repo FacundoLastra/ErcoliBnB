@@ -1,0 +1,26 @@
+.reservationsArea {
+    padding: 5%;
+}
+.imageFix {
+    height: 30rem;
+}
+a.brand-logo.marginNav {
+    margin-left: 20rem;
+}
+.navColor{
+    background-color: #1976d2;
+}
+.page-footer {
+    background-color: #1976d2 !important;
+}
+.card .card-image .card-title {
+    font-weight: bold !important;
+}
+span.card-title {
+    color: #000 !important;
+    font-weight: bold !important;
+}
+.margin {
+    margin-left: 5rem;
+    margin-top: 5rem;
+}

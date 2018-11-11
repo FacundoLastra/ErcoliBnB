@@ -1,0 +1,69 @@
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <title> Alquileres </title>
+</head>
+<body id="body">
+    {% block header %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <nav class="navColor">
+                    <div class="nav-wrapper">
+                        <a href="/" class="brand-logo marginNav">Hotel Reservation System</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+            
+    {% endblock %}
+    {% block content %}
+    <h5>Contenido Base</h5>
+    {% endblock %}
+    {% block footer %}
+    <footer class="page-footer">
+        <div class="container">
+          <div class="row">
+            <div class="col l6 s12">
+              <h5 class="white-text">Realize su reserva con Tranquilidad!</h5>
+              <p class="grey-text text-lighten-4">Nuestros representantes siempre estan esperando sus dudas y inquietudes sobre las propiedades!.</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+              <h5 class="white-text">Numeros de Contanto:</h5>
+              <ul>
+                <li>Oficina: +54-0223-254654</li>
+                <li>Atencion al Cliente: 0800-456-421</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer-copyright">
+          <div class="container">
+          © 2018 Booking Hotel System
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('select').formSelect();
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const options = { format: 'yyyy-mm-dd'}
+            var elems = document.querySelectorAll('.datepicker');
+            var instances = M.Datepicker.init(elems, options);
+            console.log(instances)
+        });      
+      </script>
+{% endblock %}
