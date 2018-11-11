@@ -34,20 +34,34 @@
         <h2>Realizar una Reserva: </h2>
         <div class="row">
             <div class="input-field col s6">
-                <input id="firstName" name="firstName" type="text" class="validate">
+                <input id="firstName" name="firstName" type="text" class="validate" required>
                 <label for="firstName">Nombre</label>
             </div>
             <div class="input-field col s6">
-                <input id="lastName" name="lastName" type="text" class="validate">
+                <input id="lastName" name="lastName" type="text" class="validate" required>
                 <label for="lastName">Apellido</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <input id="email" name="email" type="email" class="validate">
+                <input id="email" name="email" type="email" class="validate" required>
                 <label for="email">Email</label>
             </div>
+            <div class="input-field col s6">
+                    <input id="guestCount" name="guestCount" type="number" min="1" max="10" class="validate" value="{{ request.session.guestCount}}" required>
+                    <label for="guestCount">Cantidad de Personas</label>
+            </div>
         </div>
+        <div class="row">
+                <div class="input-field col s6">
+                    <input id="dateFrom" name="dateFrom" type="text" class="datepicker" value="{{ request.session.dateFrom }}" required>
+                    <label for="dateFrom">Desde:</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="dateTo" name="dateTo" type="text" class="datepicker" value="{{ request.session.dateTo }}" required>
+                    <label for="dateTo">Hasta:</label>
+                </div>
+            </div>
         <input type="number" name="propId" id="propId" value="{{propInfo.id}}" hidden>
         <div class="row">
             <div class="input-field col s6">

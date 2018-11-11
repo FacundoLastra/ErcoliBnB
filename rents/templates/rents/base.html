@@ -55,4 +55,15 @@
         </div>
       </footer>
     </div>
+    <script>
+        $(document).ready(function() {
+            $('select').formSelect();
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const options = { format: 'yyyy-mm-dd'}
+            var elems = document.querySelectorAll('.datepicker');
+            var instances = M.Datepicker.init(elems, options);
+            console.log(instances)
+        });      
+      </script>
 {% endblock %}

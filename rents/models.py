@@ -25,7 +25,7 @@ class Prop(models.Model):
         verbose_name_plural = "Properties"
 
     def __str__(self):
-        return self.nam
+        return self.name
 
 class Reservation(models.Model):
     total = models.IntegerField(blank=True, null=True)
@@ -33,7 +33,7 @@ class Reservation(models.Model):
     lastName = models.CharField(blank=True, null=True, max_length=50)
     email = models.EmailField(blank=True, null=True, max_length=200)
     prop = models.ForeignKey(Prop, on_delete=models.PROTECT, blank=False, null=False)
-    ReservationDate = models.DateField(blank=False, null=False, auto_now=True)
+    reservationDate = models.DateField(blank=False, null=False, auto_now=True)
 
     def __str__(self):
         return self.firstName + ' ' + self.lastName
