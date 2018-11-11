@@ -6,22 +6,25 @@ from rents.models import *
 # Create your views here.
 def index(request):
     cities = City.objects.all()
-    if 'cityId' in request.GET:
-        filtered = Prop.objects.all().filter(city = request.GET['cityId'])
-        city = City.objects.all().filter(id = request.GET['cityId'])
-        if city:
-            city = city[0]
+    if 'cityId' and 'dateFrom' and 'dateTo' and 'guestCount' in request.GET:
+        filtered = filterProps(request.GET['cityId'],request.GET['dateFrom'],request.GET['dateTo'],request.GET['guestCount'])
+        
+        selectedCity = City.objects.get(id = request.GET['cityId'])
+
         cities = City.objects.exclude(id = request.GET['cityId'] )
+
         context = {
+            'userSearch': True,
             'props': filtered,
             'cities': cities,
-            'selectedCity':city
+            'selectedCity':selectedCity,
+            'selectedDateFrom': request.GET['dateFrom'],
+            'selectedDateTo': request.GET['dateTo']
         }
         return render(request, 'rents/index.html', context)
     else:
-        props = Prop.objects.all()
         context = {
-            'props': props,
+            'userSearch': False,
             'cities': cities
         }
         return render(request, 'rents/index.html', context)
@@ -48,17 +51,17 @@ def reserveProp(request):
                 if reservationDate.checkIn <= endDate <= reservationDate.checkOut:
                     return render(request, 'rents/notAvailable.html')
         rd = ReservationDate(
-            date=datetime.now().date(),
-            checkIn=beginDate,
-            checkOut=endDate,
-            prop=prop)
+            date = datetime.now().date(),
+            checkIn = beginDate,
+            checkOut = endDate,
+            prop = prop)
         r = Reservation(
-            reservationDate=rd,
-            prop=prop,
-            firstName=request.POST['firstName'],
-            lastName=request.POST['lastName'],
-            email=request.POST['email'])
-        rd.reservation=r
+            reservationDate = rd,
+            prop = prop,
+            firstName = request.POST['firstName'],
+            lastName = request.POST['lastName'],
+            email = request.POST['email'])
+        rd.reservation = r
         rd.save()
         r.total = r.prop.dailyPrice * r.prop.reservationdate_set.filter(reservation=r).count()
         r.save()
@@ -67,7 +70,25 @@ def reserveProp(request):
 
 def okReservation(request, idReservation):
     try:
-        reservation = Reservation.objects.get(id=idReservation)
+        reservation = Reservation.objects.get(id = idReservation)
     except Prop.DoesNotExist:
         raise Http404("Propiedad no encontrada")
     return render(request, 'rents/okReservation.html', {'prop': reservation})
+
+def filterProps(cityId, dateFrom, dateTo, guestCount):
+    propList = Prop.objects.all().filter(city = cityId)
+
+    if guestCount:
+        propList = propList.filter(maxGuests__gte = guestCount)
+    
+    dateFrom = datetime.strptime(dateFrom, '%Y-%m-%d').date()
+    dateTo = datetime.strptime(dateTo, '%Y-%m-%d').date()
+
+    for prop in propList:
+        reservationDates = ReservationDate.objects.filter(prop = prop.id)
+        for reservationDate in reservationDates:
+            if reservationDate.reservation is not None:
+                if dateFrom <= reservationDate.date <= dateTo:
+                    propList = propList.filter(prop != prop.id)
+    
+    return propList

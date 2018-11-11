@@ -47,20 +47,6 @@
                 <input id="email" name="email" type="email" class="validate">
                 <label for="email">Email</label>
             </div>
-            <div class="input-field col s6">
-                    <input id="maxPersons" name="maxPersons" type="number" min="0" max="50" class="validate">
-                    <label for="maxPersons">Cantidad de Personas</label>
-                </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <input id="dateFrom" name="dateFrom" type="text" class="datepicker">
-                <label for="dateFrom">Desde:</label>
-            </div>
-            <div class="input-field col s6">
-                    <input id="dateTo" name="dateTo" type="text" class="datepicker">
-                    <label for="dateTo">Hasta:</label>
-            </div>
         </div>
         <input type="number" name="propId" id="propId" value="{{propInfo.id}}" hidden>
         <div class="row">
@@ -73,13 +59,5 @@
     </form>
 </div>
 {% endif %}
-<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const options = { format: 'yyyy-mm-dd'}
-            var elems = document.querySelectorAll('.datepicker');
-            var instances = M.Datepicker.init(elems, options);
-            console.log(instances)
-      });      
-</script>
 {% endblock %}
 

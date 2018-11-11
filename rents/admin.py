@@ -6,8 +6,8 @@ admin.site.site_header = "Ercolibnb: admin page"
 
 class ReservationDateInLine(admin.TabularInline):
     model=ReservationDate
-    fk_name='prop'
-    extra=0
+    fk_name ='prop'
+    max_num = 7
 
 class AdminPropertyInLine(admin.ModelAdmin):
     inlines=[ReservationDateInLine]
