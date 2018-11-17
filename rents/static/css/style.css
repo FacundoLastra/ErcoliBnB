@@ -24,3 +24,8 @@ span.card-title {
     margin-left: 5rem;
     margin-top: 5rem;
 }
+.days {
+    overflow: scroll;
+    width: 20rem;
+    height: 15rem;
+}

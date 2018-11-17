@@ -37,9 +37,10 @@ def index(request):
 def detail(request, propid):
     try:
         propInfo = Prop.objects.get(id=propid)
+        propDays = ReservationDate.objects.filter(prop=propInfo, reservation=None)
     except Prop.DoesNotExist:
         raise Http404("No existe la propiedad")
-    return render(request, 'rents/propInfo.html', {'propInfo': propInfo})
+    return render(request, 'rents/propInfo.html', {'propInfo': propInfo,'propDays': propDays})
 
 
 def reserveProp(request):

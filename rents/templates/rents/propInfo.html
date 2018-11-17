@@ -16,17 +16,24 @@
 </div>
 <div class="row">
     <div class="col s6">
+        <p>Detalles de la propiedad:</p>
         <ul class="collection">
             <li class="collection-item">Descripcion: {{propInfo.description}} </li>
             <li class="collection-item">Cant Max de personas: {{propInfo.maxGuests}}</li>
             <li class="collection-item">Ciudad: {{propInfo.city}}</li>
-          </ul>
-    </div>
-    <div class="col s6">
-        <ul class="collection">
             <li class="collection-item">Nombre del Propietario: {{propInfo.owner}} </li>
             <li class="collection-item">Precio por Dia: {{propInfo.dailyPrice}}</li>
           </ul>
+    </div>
+    <div class="col s6">
+        <p>Dias habilitados para reservar:</p>
+        <div class="days">
+            <ul class="collection">
+                {% for propDay in propDays %}
+                    <li class="collection-item">{{propDay.date}}</li>
+                {% endfor %} 
+            </ul>
+        </div>        
     </div>
 </div>
 <div class="row">
